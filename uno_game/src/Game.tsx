@@ -25,9 +25,11 @@ const UnoGame = () => {
     for (let i = 0; i < 7; i++) {
       newTake.push(cards[Math.floor(Math.random() * cards.length)]);
     }
-
     setTake(newTake);
   };
+  useEffect(() => {
+    Take7Cards(deck);
+  }, []);
 
   const PlacedCard = (deckcard: string[]) => {
     const newTake: string[] = [];
@@ -37,6 +39,9 @@ const UnoGame = () => {
 
     setDeckcards(newTake);
   };
+  useEffect(() => {
+    PlacedCard(deck);
+  }, []);
 
   const PlaceCard = (take: string[], index: number) => {
     if (
@@ -60,6 +65,12 @@ const UnoGame = () => {
     }
   };
 
+  const TakeCard = (takee: string[]) => {
+    const newTake: string[] = [...take];
+    newTake.push(takee[Math.floor(Math.random() * takee.length)]);
+    setTake(newTake);
+  };
+
   return (
     <div>
       {take.map((value, index) => (
@@ -67,12 +78,14 @@ const UnoGame = () => {
           <img style={{ height: "10em" }} src={`/cards/${value}`} alt="" />
         </button>
       ))}
+      
       {deckcard.map((value) => (
         <img style={{ height: "10em" }} src={`/cards/${value}`} alt="" />
       ))}
 
       <button onClick={() => Take7Cards(deck)}>Neem kaarten</button>
       <button onClick={() => PlacedCard(deck)}>kaart deck omdraaien</button>
+      <button onClick={() => TakeCard(deck)}>een kaart nemen</button>
     </div>
   );
 };
